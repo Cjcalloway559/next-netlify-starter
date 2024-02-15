@@ -1,23 +1,37 @@
-import Head from 'next/head'
-import Header from '@components/Header'
-import Footer from '@components/Footer'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Sheet</title>
+</head>
+<body>
+    <form id="timeSheetForm">
+        Employee Name: <input type="text" name="employeeName"><br>
+        Work Hours: <input type="text" name="workHours"><br>
 
-export default function Home() {
-  return (
-    <div className="container">
-      <Head>
-        <title>Next.js Starter!</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+        <button type="button" onclick="submitForm()">Submit</button>
+    </form>
 
-      <main>
-        <Header title="Welcome to my app!" />
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
-      </main>
+    <script>
+        function submitForm() {
+            var formData = new FormData(document.getElementById("timeSheetForm"));
 
-      <Footer />
-    </div>
-  )
-}
+            fetch('URL_TO_GOOGLE_APPS_SCRIPT', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text()) // Extract the response text
+            .then(data => {
+                // Handle the response as needed
+                console.log('Form submitted successfully:', data);
+            })
+            .catch(error => {
+                // Handle errors
+                console.error('Error submitting form:', error);
+            });
+        }
+    </script>
+</body>
+</html>
